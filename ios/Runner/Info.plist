@@ -10,18 +10,59 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>ar</string>
+	</array>
 	<key>CFBundleName</key>
-	<string>mt3</string>
+	<string>wean</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>$(FLUTTER_BUILD_NAME)</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.915124547478-atn3b8vdab06qv063ku83qjclkj23nf1</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
-	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Please Allow access to camera to capture photos easily. Your data is safe and not shared with any third parties.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We use location to show the nearest sellers and buyers for you. We only do this to enable App functionality and we don't share this data with any third parties.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We use location to show the nearest sellers and buyers for you. We only do this to enable App functionality and we don't share this data with any third parties.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>we only ask for your location so we can find your address. this is important so we can match you with the nearst results.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Please share Your location so we can find your address. This is asked only once we don't track your location.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Please Allow access to photo library so we can upload images easily. Your date is safe and will not be shared with any third parties.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Please Allow access to photo library so we can upload images easily. Your date is safe and will not be shared with any third parties.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -29,8 +70,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>

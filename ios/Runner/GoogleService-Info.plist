@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>915124547478-atn3b8vdab06qv063ku83qjclkj23nf1.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.915124547478-atn3b8vdab06qv063ku83qjclkj23nf1</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>915124547478-1i0ieo7fklm0dh4e0gac4r756cr942p6.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyADv789kfEVpjA5tzfmjPrNCbEutWMdtkA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>915124547478</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.app.waenapp</string>
+	<key>PROJECT_ID</key>
+	<string>waen-f0eb7</string>
+	<key>STORAGE_BUCKET</key>
+	<string>waen-f0eb7.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:915124547478:ios:79c3ecd1d97f57de05f7b7</string>
+	<key>DATABASE_URL</key>
+	<string>https://waen-f0eb7-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

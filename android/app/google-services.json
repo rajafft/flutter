@@ -1,0 +1,95 @@
+{
+  "project_info": {
+    "project_number": "915124547478",
+    "firebase_url": "https://waen-f0eb7-default-rtdb.firebaseio.com",
+    "project_id": "waen-f0eb7",
+    "storage_bucket": "waen-f0eb7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915124547478:android:6493172f544a2b4605f7b7",
+        "android_client_info": {
+          "package_name": "com.app.waen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "915124547478-1i0ieo7fklm0dh4e0gac4r756cr942p6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.waen",
+            "certificate_hash": "a26f23457a2560b7f87e2d7649006b4205f93831"
+          }
+        },
+        {
+          "client_id": "915124547478-8aadqdg4cemv28nnl6st936p2ojs8gc5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.waen",
+            "certificate_hash": "687e57e7fe35459bb37dbca1afbfa4aaf0bc2bb7"
+          }
+        },
+        {
+          "client_id": "915124547478-brls8ptr1vj0dm215l94ulqfe8p5v74v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.waen",
+            "certificate_hash": "b6a7e14797a0c745433358bb7d36eb7933b2c773"
+          }
+        },
+        {
+          "client_id": "915124547478-lc9covos1gm16s60sckt19o4e3ioj0b8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.waen",
+            "certificate_hash": "fc047f8f8a7eac60fe41be554067a63794d83688"
+          }
+        },
+        {
+          "client_id": "915124547478-ntar48q6avras3h01v61jg9tqau5rkuv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.waen",
+            "certificate_hash": "23dd862718fc098ed3c18601689b01f5f2d02e6f"
+          }
+        },
+        {
+          "client_id": "915124547478-r6itb0e98e9fhm5bq0ju2mglds2a98un.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.waen",
+            "certificate_hash": "80ee4855cfe8f44a00dc838ef61c75d8b7a65e52"
+          }
+        },
+        {
+          "client_id": "915124547478-oregrimmhfcc6dn4crjdariiq929n2gr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6oi6q1iaLrKZqyGi-P09sPnOAs9fQmCA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "915124547478-oregrimmhfcc6dn4crjdariiq929n2gr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "915124547478-p67btamsvsidqeg9siioo8019rm3gqro.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.app.waen"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

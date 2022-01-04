@@ -1,115 +1,163 @@
+import 'package:camera/camera.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get_it/get_it.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:wean_app/blocs/bloc_observer.dart';
+import 'package:wean_app/blocs/chat/chat_bloc.dart';
+import 'package:wean_app/blocs/conversation/conversation_bloc.dart';
+import 'package:wean_app/blocs/cubit/yard_cubit.dart';
+import 'package:wean_app/blocs/order/order_bloc.dart';
+import 'package:wean_app/blocs/preferences/preferences_bloc.dart';
+import 'package:wean_app/blocs/report_product_bloc/report_product_bloc.dart';
+import 'package:wean_app/blocs/user_details/user_details_bloc.dart';
+import 'package:wean_app/common/appTheme.dart';
+import 'package:wean_app/common/routes.dart';
+import 'package:wean_app/services/firebase_messaging_services.dart';
+import 'package:wean_app/services/notification_services.dart';
+import 'package:wean_app/translations/codegen_loader.g.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+NavigatorState? navigatorState;
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+final GetIt getIt = GetIt.instance;
 
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final cameras = await availableCameras(); //Get list of available cameras
+  await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp();
+  getIt.registerLazySingleton<NotificationServices>(
+    () => NotificationServices(),
+  );
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    // navigation bar color
+    statusBarColor: AppTheme.primaryStartColor, // status bar color
+  ));
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+  // Pass all uncaught errors from the framework to Crashlytics.
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+  FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+  Bloc.observer = MyBlocObserver();
+  await SentryFlutter.init((options) {
+    options.dsn =
+        'https://83cb10ca59164077a9c4af4de63a3eac@o1079481.ingest.sentry.io/6088053';
+  },
+      appRunner: () => runApp(EasyLocalization(
+          child: WeanApp(cameras: cameras),
+          assetLoader: CodegenLoader(),
+          supportedLocales: [
+            Locale('en'),
+            Locale('ar'),
           ],
+          fallbackLocale: Locale('en'),
+          path: 'assets/translations')));
+  configLoading();
+}
+
+void configLoading() {
+  EasyLoading.instance
+    ..displayDuration = const Duration(milliseconds: 2000)
+    ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+    ..loadingStyle = EasyLoadingStyle.dark
+    ..indicatorSize = 45.0
+    ..radius = 10.0
+    ..progressColor = Colors.yellow
+    ..backgroundColor = Colors.green
+    ..indicatorColor = Colors.yellow
+    ..textColor = Colors.yellow
+    ..maskColor = Colors.blue.withOpacity(0.5)
+    ..userInteractions = true
+    ..toastPosition = EasyLoadingToastPosition.top
+    ..dismissOnTap = false;
+}
+
+class WeanApp extends StatefulWidget {
+  final List<CameraDescription> cameras;
+  const WeanApp({Key? key, required this.cameras}) : super(key: key);
+  @override
+  _WeanAppState createState() => _WeanAppState();
+}
+
+class _WeanAppState extends State<WeanApp> {
+  final GlobalKey<NavigatorState> navigatorStateKey =
+      GlobalKey<NavigatorState>();
+
+  @override
+  Widget build(BuildContext context) {
+    navigatorState = navigatorStateKey.currentState;
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => PreferencesBloc(),
         ),
+        BlocProvider(
+          create: (context) => OrderBloc(),
+        ),
+        BlocProvider(
+          create: (context) => UserDetailsBloc(),
+        ),
+        BlocProvider(
+          create: (context) => YardCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ConversationBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ChatBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ReportProductBloc(),
+        ),
+      ],
+      child: MaterialApp(
+        supportedLocales: context.supportedLocales,
+        localizationsDelegates: context.localizationDelegates,
+        locale: context.locale,
+        navigatorKey: navigatorStateKey,
+        initialRoute: '/',
+        onGenerateRoute: RouteFinding().generateRoute,
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.appThemeData,
+        builder: (context, child) {
+          return StreamBuilder<User?>(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData && snapshot.data != null)
+                FirebaseMessagingServices().checkAndUpdateFCMToken();
+              return FlutterEasyLoading(
+                  child: MyInheritedWidget(
+                child: child!,
+                camera: widget.cameras,
+              ));
+            },
+          );
+        },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
+
+class MyInheritedWidget extends InheritedWidget {
+  const MyInheritedWidget({
+    Key? key,
+    required this.camera,
+    required Widget child,
+  }) : super(key: key, child: child);
+
+  final List<CameraDescription> camera;
+
+  static MyInheritedWidget? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<MyInheritedWidget>();
+  }
+
+  @override
+  bool updateShouldNotify(MyInheritedWidget old) => camera != old.camera;
+}
+//flutter pub run easy_localization:generate -S "assets/translations" -O "lib/translations"
+//flutter pub run easy_localization:generate -S "assets/translations" -O "lib/translations" -o "locale_keys.g.dart" -f keys
