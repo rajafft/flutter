@@ -1,49 +1,43 @@
-# http://www.gnu.org/software/automake
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
 
-Makefile.in
-/ar-lib
-/mdate-sh
-/py-compile
-/test-driver
-/ylwrap
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
 
-# http://www.gnu.org/software/autoconf
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
 
-autom4te.cache
-/autoscan.log
-/autoscan-*.log
-/aclocal.m4
-/compile
-/config.guess
-/config.h.in
-/config.log
-/config.status
-/config.sub
-/configure
-/configure.scan
-/depcomp
-/install-sh
-/missing
-/stamp-h1
+# Flutter/Dart/Pub related
+**/doc/api/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
 
-# https://www.gnu.org/software/libtool/
+# Web related
+lib/generated_plugin_registrant.dart
 
-/ltmain.sh
+# Symbolication related
+app.*.symbols
 
-# http://www.gnu.org/software/texinfo
+# Obfuscation related
+app.*.map.json
 
-/texinfo.tex
-
-# http://www.gnu.org/software/m4/
-
-m4/libtool.m4
-m4/ltoptions.m4
-m4/ltsugar.m4
-m4/ltversion.m4
-m4/lt~obsolete.m4
-
-# Generated Makefile 
-# (meta build system like autotools, 
-# can automatically generate from config.status script
-# (which is called by configure script))
-Makefile
+# Exceptions to above rules.
+!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
